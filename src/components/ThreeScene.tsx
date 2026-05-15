@@ -8,10 +8,10 @@ import {
   Edges, 
   Box
 } from '@react-three/drei';
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import * as THREE from 'three';
 
-function TechArtifact() {
+function TechArtifact({ isMobile }: { isMobile: boolean }) {
   const groupRef = useRef<THREE.Group>(null);
   const coreRef = useRef<THREE.Mesh>(null);
 
@@ -30,20 +30,30 @@ function TechArtifact() {
     <Float speed={2} rotationIntensity={0.5} floatIntensity={1}>
       <group ref={groupRef}>
         <Box ref={coreRef} args={[1.5, 1.5, 1.5]}>
-          <MeshTransmissionMaterial
-            backside
-            samples={4}
-            thickness={1}
-            chromaticAberration={0.05}
-            anisotropy={0.1}
-            distortion={0.1}
-            distortionScale={0.1}
-            temporalDistortion={0.1}
-            clearcoat={1}
-            attenuationDistance={0.5}
-            attenuationColor="#CCFF00"
-            color="#050505"
-          />
+          {isMobile ? (
+            <meshStandardMaterial 
+              color="#050505" 
+              metalness={0.9} 
+              roughness={0.1} 
+              emissive="#CCFF00" 
+              emissiveIntensity={0.2} 
+            />
+          ) : (
+            <MeshTransmissionMaterial
+              backside
+              samples={4}
+              thickness={1}
+              chromaticAberration={0.05}
+              anisotropy={0.1}
+              distortion={0.1}
+              distortionScale={0.1}
+              temporalDistortion={0.1}
+              clearcoat={1}
+              attenuationDistance={0.5}
+              attenuationColor="#CCFF00"
+              color="#050505"
+            />
+          )}
           <Edges threshold={15} color="#CCFF00" scale={1.05} />
         </Box>
 
@@ -62,18 +72,44 @@ function TechArtifact() {
 }
 
 export default function ThreeScene() {
+  const [isVisible, setIsVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0.1 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+      observer.disconnect();
+    };
+  }, []);
+
   return (
-    <div className="absolute inset-0 z-0">
-      <Canvas dpr={[1, 2]}>
-        <PerspectiveCamera makeDefault position={[0, 0, 10]} fov={50} />
-        <ambientLight intensity={0.5} />
-        <pointLight position={[10, 10, 10]} intensity={2} color="#CCFF00" />
-        <pointLight position={[-10, -10, -10]} intensity={2} color="#FF00FF" />
-        
-        <TechArtifact />
-        
-        <fog attach="fog" args={['#0A0A0A', 10, 35]} />
-      </Canvas>
+    <div ref={containerRef} className="absolute inset-0 z-0">
+      {isVisible && (
+        <Canvas dpr={isMobile ? [1, 1] : [1, 2]}>
+          <PerspectiveCamera makeDefault position={[0, 0, 10]} fov={50} />
+          <ambientLight intensity={0.5} />
+          <pointLight position={[10, 10, 10]} intensity={2} color="#CCFF00" />
+          <pointLight position={[-10, -10, -10]} intensity={2} color="#FF00FF" />
+          
+          <TechArtifact isMobile={isMobile} />
+          
+          <fog attach="fog" args={['#0A0A0A', 10, 35]} />
+        </Canvas>
+      )}
     </div>
   );
 }

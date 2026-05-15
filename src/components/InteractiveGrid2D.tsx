@@ -1,16 +1,35 @@
 'use client';
 
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 
 export default function InteractiveGrid2D() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const mouseRef = useRef({ x: -1000, y: -1000 });
+  const [isVisible, setIsVisible] = useState(false);
   const cellSize = 40;
 
   const gridDataRef = useRef<Float32Array | null>(null);
   const dimensionsRef = useRef({ cols: 0, rows: 0 });
 
   useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -27,7 +46,6 @@ export default function InteractiveGrid2D() {
     };
 
     const render = () => {
-      // Use parent container size or window size
       const width = canvas.parentElement?.clientWidth || window.innerWidth;
       const height = canvas.parentElement?.clientHeight || window.innerHeight;
 
@@ -59,7 +77,6 @@ export default function InteractiveGrid2D() {
             const intensity = gridData[index];
 
             if (intensity > 0.005) {
-              // Keeping the user's preferred subtle opacity (0.06)
               ctx.fillStyle = `rgba(204, 255, 0, ${intensity * 0.06})`;
               ctx.fillRect(c * cellSize, r * cellSize, cellSize, cellSize);
               gridData[index] *= 0.94;
@@ -85,7 +102,6 @@ export default function InteractiveGrid2D() {
 
     const handleMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
-      // Calculate mouse position relative to the canvas
       mouseRef.current = {
         x: e.clientX - rect.left,
         y: e.clientY - rect.top
@@ -99,13 +115,15 @@ export default function InteractiveGrid2D() {
       window.removeEventListener('mousemove', handleMouseMove);
       cancelAnimationFrame(animationFrameId);
     };
-  }, []);
+  }, [isVisible]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="absolute inset-0 pointer-events-none z-0"
-      style={{ maskImage: 'radial-gradient(ellipse at center, black, transparent 95%)' }}
-    />
+    <div ref={containerRef} className="absolute inset-0 pointer-events-none z-0">
+      <canvas
+        ref={canvasRef}
+        className="w-full h-full"
+        style={{ maskImage: 'radial-gradient(ellipse at center, black, transparent 95%)' }}
+      />
+    </div>
   );
 }

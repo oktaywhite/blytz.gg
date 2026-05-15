@@ -2,8 +2,20 @@
 
 import { motion } from 'framer-motion';
 import { Zap, Shield, ArrowRight, Activity } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 export default function Pricing() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   return (
     <section id="pricing" className="py-40 px-6 bg-black relative overflow-hidden">
       <div className="container mx-auto max-w-5xl relative z-10">
@@ -19,15 +31,15 @@ export default function Pricing() {
           
           {/* BASE PROTOCOL - Compact Node */}
           <motion.div 
-            initial={{ opacity: 0, rotateX: 10, rotateY: -15, x: -100 }}
-            whileInView={{ opacity: 1, rotateX: 5, rotateY: -10, x: 0 }}
-            exit={{ opacity: 0, rotateX: 10, rotateY: -15, x: -100 }}
-            whileHover={{ rotateY: -5, scale: 1.02 }}
+            initial={isMobile ? { opacity: 0, y: 20 } : { opacity: 0, rotateX: 10, rotateY: -15, x: -100 }}
+            whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, rotateX: 5, rotateY: -10, x: 0 }}
+            exit={isMobile ? { opacity: 0, y: 20 } : { opacity: 0, rotateX: 10, rotateY: -15, x: -100 }}
+            whileHover={!isMobile ? { rotateY: -5, scale: 1.02 } : { scale: 1.02 }}
             viewport={{ margin: "-50px" }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="w-full max-w-[340px] relative group"
+            className="w-full max-w-[340px] relative group will-change-transform"
           >
-            <div className="glass rounded-[3rem] border-r-4 border-white/10 p-10 relative overflow-hidden backdrop-blur-3xl">
+            <div className={`glass rounded-[3rem] border-r-4 border-white/10 p-10 relative overflow-hidden ${isMobile ? 'backdrop-blur-xl' : 'backdrop-blur-3xl'}`}>
               <div className="absolute top-0 left-0 w-full h-[1px] bg-white/20 animate-scan pointer-events-none" />
               
               <div className="space-y-8">
@@ -64,17 +76,17 @@ export default function Pricing() {
 
           {/* ELITE MATRIX - Compact Slab */}
           <motion.div 
-            initial={{ opacity: 0, rotateX: 10, rotateY: 15, x: 100 }}
-            whileInView={{ opacity: 1, rotateX: 5, rotateY: 10, x: 0 }}
-            exit={{ opacity: 0, rotateX: 10, rotateY: 15, x: 100 }}
-            whileHover={{ rotateY: 5, scale: 1.05 }}
+            initial={isMobile ? { opacity: 0, y: 20 } : { opacity: 0, rotateX: 10, rotateY: 15, x: 100 }}
+            whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, rotateX: 5, rotateY: 10, x: 0 }}
+            exit={isMobile ? { opacity: 0, y: 20 } : { opacity: 0, rotateX: 10, rotateY: 15, x: 100 }}
+            whileHover={!isMobile ? { rotateY: 5, scale: 1.05 } : { scale: 1.05 }}
             viewport={{ margin: "-50px" }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="w-full max-w-[380px] relative group"
+            className="w-full max-w-[380px] relative group will-change-transform"
           >
-            <div className="absolute inset-0 bg-lime/10 blur-[100px] opacity-10 pointer-events-none" />
+            {!isMobile && <div className="absolute inset-0 bg-lime/10 blur-[100px] opacity-10 pointer-events-none" />}
             
-            <div className="glass rounded-[3.5rem] border-l-4 border-lime p-12 relative overflow-hidden backdrop-blur-3xl shadow-[0_0_50px_rgba(204,255,0,0.1)]">
+            <div className={`glass rounded-[3.5rem] border-l-4 border-lime p-12 relative overflow-hidden shadow-[0_0_50px_rgba(204,255,0,0.1)] ${isMobile ? 'backdrop-blur-xl' : 'backdrop-blur-3xl'}`}>
               <div className="absolute top-0 left-0 w-full h-[2px] bg-lime/40 animate-scan-fast pointer-events-none shadow-[0_0_10px_rgba(204,255,0,0.4)]" />
               
               <div className="space-y-10">

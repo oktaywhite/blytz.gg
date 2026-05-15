@@ -1,0 +1,24 @@
+# 1. TEKNOLOJİK ANAYASA (DEĞİŞTİRİLEMEZ)
+- **Framework:** React 18+ (Next.js App Router yapısı).
+- **Dil:** Strict TypeScript (Interface ve Type zorunludur, 'any' yasaktır).
+- **Stil:** Pure Tailwind CSS (Inline kullanım önceliklidir).
+- **Dosya Yolları:** Bileşenler `src/components/`, sayfalar `src/app/`, yardımcılar `src/lib/` altında kalmalıdır.
+
+# 2. TASARIM DOKUNULMAZLIĞI (ALTIN KURAL)
+- **Görsel Koruma:** Mevcut bir dosya üzerinde çalışırken, spesifik olarak "TASARIMI DEĞİŞTİR" denmediği sürece mevcut Tailwind class'larına, renk paletine, spacing değerlerine ve layout yapısına ASLA dokunma.
+- **Fonksiyonel Cerrahi:** Sadece sorunlu olan fonksiyonu veya eklenmesi gereken özelliği düzenle. Dosyanın geri kalanını, çalışan kod bloklarını ve JSX yapısını olduğu gibi bırak.
+- **Kırpmayı Yasakla:** "Kodun geri kalanı aynı kalacak" diyerek kod bloklarını eksik verme. Her zaman tam dosyayı ver; çalışan importları veya state'leri asla silme.
+
+# 3. KÜTÜPHANE VE FRAMEWORK POLİTİKASI
+- **Vibe Coding Serbestliği:** Animasyonlar için `framer-motion`, 3D için `three.js` ve karmaşık UI logicleri için popüler React kütüphanelerini kullanmakta özgürsün. 
+- **Modern Yaklaşım:** Her zaman functional component ve modern React hook'larını kullan. `use client` direktifini dosya başına sadece etkileşim varsa ekle.
+
+# 4. CEVAP VE İLETİŞİM PROTOKOLÜ
+- **Önce Teşhis:** Bir hata düzeltirken önce hatanın nedenini tek cümleyle açıkla, sonra çözümü ver.
+- **Gereksiz Gevezeliği Bırak:** Uzun teorik açıklamalar yapma. Direkt "Yaptığım Değişiklikler" listesi ve ardından kod bloğunu paylaş.
+- **Mevcut Yapıya Saygı:** Mevcut değişken isimlerini ve dosya isimlendirme standartlarını (PascalCase components gibi) bozma.
+
+# 5. STİL VE CSS POLİTİKASI
+- **Tailwind Önceliği:** Tüm stil işlemlerini Tailwind CSS class'ları ile bileşen içinde (inline) hallet. 
+- **Mevcut CSS:** `src/app/globals.css` dosyası sabittir. Çok ekstrem bir durum olmadıkça bu dosyaya yeni satır ekleme ve ASLA yeni/ayrı bir .css dosyası oluşturma.
+- **Dinamik Stiller:** Tailwind'in yetmediği yerde React `style={{...}}` attribute'unu kullan.

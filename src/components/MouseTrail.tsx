@@ -6,12 +6,19 @@ import { motion, useMotionValue } from 'framer-motion';
 export default function MouseTrail() {
   const [mounted, setMounted] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
 
   useEffect(() => {
     setMounted(true);
     
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
     const moveCursor = (e: MouseEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
@@ -26,11 +33,17 @@ export default function MouseTrail() {
       setIsHovering(isClickable);
     };
 
-    window.addEventListener('mousemove', moveCursor, { passive: true });
-    return () => window.removeEventListener('mousemove', moveCursor);
+    if (window.innerWidth >= 768) {
+      window.addEventListener('mousemove', moveCursor, { passive: true });
+    }
+    
+    return () => {
+      window.removeEventListener('mousemove', moveCursor);
+      window.removeEventListener('resize', checkMobile);
+    };
   }, [mouseX, mouseY]);
 
-  if (!mounted) return null;
+  if (!mounted || isMobile) return null;
 
   return (
     <div className="fixed inset-0 pointer-events-none z-[9999] overflow-hidden">
