@@ -28,9 +28,9 @@ export default function Pricing() {
         </div>
 
         <div className="relative flex flex-col md:flex-row items-center justify-center gap-8 lg:gap-16 perspective-[2000px]">
-          
+
           {/* BASE PROTOCOL - Compact Node */}
-          <motion.div 
+          <motion.div
             initial={isMobile ? { opacity: 0, y: 20 } : { opacity: 0, rotateX: 10, rotateY: -15, x: -100 }}
             whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, rotateX: 5, rotateY: -10, x: 0 }}
             exit={isMobile ? { opacity: 0, y: 20 } : { opacity: 0, rotateX: 10, rotateY: -15, x: -100 }}
@@ -41,7 +41,7 @@ export default function Pricing() {
           >
             <div className={`glass rounded-[3rem] border-r-4 border-white/10 p-10 relative overflow-hidden ${isMobile ? 'backdrop-blur-xl' : 'backdrop-blur-3xl'}`}>
               <div className="absolute top-0 left-0 w-full h-[1px] bg-white/20 animate-scan pointer-events-none" />
-              
+
               <div className="space-y-8">
                 <div className="flex justify-between items-start">
                   <div className="p-3 rounded-xl bg-white/5 border border-white/10">
@@ -54,7 +54,7 @@ export default function Pricing() {
                 </div>
 
                 <div className="space-y-1">
-                  <div className="text-6xl font-black tracking-tighter">$0</div>
+                  <div className="text-6xl font-black tracking-tighter">€0</div>
                   <div className="text-gray-600 text-[9px] font-black uppercase tracking-[0.3em]">Permanent_Access</div>
                 </div>
 
@@ -75,7 +75,7 @@ export default function Pricing() {
           </motion.div>
 
           {/* ELITE MATRIX - Compact Slab */}
-          <motion.div 
+          <motion.div
             initial={isMobile ? { opacity: 0, y: 20 } : { opacity: 0, rotateX: 10, rotateY: 15, x: 100 }}
             whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, rotateX: 5, rotateY: 10, x: 0 }}
             exit={isMobile ? { opacity: 0, y: 20 } : { opacity: 0, rotateX: 10, rotateY: 15, x: 100 }}
@@ -85,10 +85,10 @@ export default function Pricing() {
             className="w-full max-w-[380px] relative group will-change-transform"
           >
             {!isMobile && <div className="absolute inset-0 bg-lime/10 blur-[100px] opacity-10 pointer-events-none" />}
-            
+
             <div className={`glass rounded-[3.5rem] border-l-4 border-lime p-12 relative overflow-hidden shadow-[0_0_50px_rgba(204,255,0,0.1)] ${isMobile ? 'backdrop-blur-xl' : 'backdrop-blur-3xl'}`}>
               <div className="absolute top-0 left-0 w-full h-[2px] bg-lime/40 animate-scan-fast pointer-events-none shadow-[0_0_10px_rgba(204,255,0,0.4)]" />
-              
+
               <div className="space-y-10">
                 <div className="flex justify-between items-start">
                   <div className="p-4 rounded-2xl bg-lime/10 border border-lime/30 shadow-[0_0_20px_rgba(204,255,0,0.1)]">
@@ -102,7 +102,7 @@ export default function Pricing() {
 
                 <div className="space-y-2">
                   <div className="flex items-baseline gap-3">
-                    <div className="text-7xl font-black tracking-tighter text-white">$29</div>
+                    <div className="text-7xl font-black tracking-tighter text-white">€5</div>
                     <div className="bg-lime text-black px-2 py-0.5 rounded-full text-[9px] font-black tracking-widest uppercase">Lifetime</div>
                   </div>
                   <div className="text-lime/60 text-[9px] font-black uppercase tracking-[0.3em]">Elite_Sync_Active</div>

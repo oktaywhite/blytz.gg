@@ -4,7 +4,8 @@ import Features from '@/components/Features';
 import GameSupport from '@/components/GameSupport';
 import HowItWorks from '@/components/HowItWorks';
 import Pricing from '@/components/Pricing';
-import { Globe, MessageSquare as Discord, Code, ArrowUpRight } from 'lucide-react';
+import CTA from '@/components/CTA';
+import { Globe, MessageSquare as Discord, Code } from 'lucide-react';
 
 export default function Home() {
   return (
@@ -42,20 +43,7 @@ export default function Home() {
 
       <Pricing />
 
-      {/* CTA Section */}
-      <section className="py-40 px-6">
-        <div className="container mx-auto max-w-4xl glass p-16 rounded-[3rem] border border-white/5 text-center relative overflow-hidden group">
-          <div className="absolute inset-0 bg-lime/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-          <h2 className="text-4xl md:text-6xl font-black tracking-tighter mb-8 leading-tight">
-            READY TO JOIN THE <br />
-            <span className="text-lime">GAMING MULTIVERSE?</span>
-          </h2>
-          <button className="bg-lime text-black px-12 py-5 rounded-2xl font-black text-lg hover:bg-white hover:scale-105 transition-all flex items-center gap-2 mx-auto">
-            CREATE YOUR PROFILE
-            <ArrowUpRight className="w-6 h-6" />
-          </button>
-        </div>
-      </section>
+      <CTA />
 
       {/* Improved Footer */}
       <footer className="py-20 border-t border-white/5 px-6 bg-black/40">
