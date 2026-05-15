@@ -60,7 +60,7 @@ export default function Hero() {
                   placeholder="username"
                   className="w-full glass bg-black/40 border border-white/10 rounded-xl py-4 pl-28 pr-4 outline-none focus:border-lime/50 transition-all text-white font-medium backdrop-blur-md"
                 />
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-medium pointer-events-none z-10">neorank.lol/</span>
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-medium pointer-events-none z-10">blytz.gg/</span>
               </div>
               <button className="w-full sm:w-auto bg-lime text-black font-bold px-8 py-4 rounded-xl hover:bg-white transition-all flex items-center justify-center gap-2 group whitespace-nowrap glow-lime shadow-[0_0_30px_rgba(204,255,0,0.2)]">
                 CLAIM URL

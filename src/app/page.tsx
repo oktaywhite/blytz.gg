@@ -15,7 +15,7 @@ export default function Home() {
         <div className="glass px-8 py-3 rounded-full flex items-center justify-between gap-12 border border-white/5 backdrop-blur-xl max-w-6xl w-full">
           <div className="text-xl font-black tracking-tighter flex items-center gap-2 group cursor-pointer">
             <div className="w-8 h-8 bg-lime text-black rounded-lg flex items-center justify-center italic group-hover:rotate-12 transition-transform">N</div>
-            NEORANK
+            BLYTZ
           </div>
           <div className="hidden md:flex items-center gap-10 text-[12px] font-bold tracking-[0.2em] text-gray-500">
             <a href="#" className="hover:text-lime transition-colors">FEATURES</a>
@@ -50,7 +50,7 @@ export default function Home() {
         <div className="container mx-auto max-w-6xl">
           <div className="grid md:grid-cols-4 gap-12 mb-16">
             <div className="col-span-1 md:col-span-2">
-              <div className="text-2xl font-black tracking-tighter mb-6">NEORANK</div>
+              <div className="text-2xl font-black tracking-tighter mb-6">BLYTZ</div>
               <p className="text-gray-500 max-w-sm mb-8 leading-relaxed">
                 Empowering gamers to build their digital legacy across the metaverse. The only living gaming profile you'll ever need.
               </p>
@@ -86,7 +86,7 @@ export default function Home() {
 
           <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-gray-600 text-xs font-bold tracking-widest">
-              &copy; 2026 NEORANK. ALL RIGHTS RESERVED.
+              &copy; 2026 BLYTZ. ALL RIGHTS RESERVED.
             </div>
             <div className="flex gap-8 text-xs font-bold tracking-widest text-gray-600">
               <a href="#" className="hover:text-white transition-colors">PRIVACY POLICY</a>

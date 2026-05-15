@@ -105,7 +105,7 @@ export default function CTA() {
               <div className="absolute -top-20 -left-10 text-[8px] font-mono text-lime/30 space-y-1">
                 <div>X: 142.02</div>
                 <div>Y: 884.11</div>
-                <div>Z: NEORANK_CORE</div>
+                <div>Z: BLYTZ_CORE</div>
               </div>
 
               {/* Main Holographic Slate */}
@@ -134,7 +134,7 @@ export default function CTA() {
                       
                       {/* Floating Hostname */}
                       <div className="absolute -top-4 right-0 text-[10px] font-black text-gray-600 tracking-widest uppercase">
-                        Protocol://neorank.lol/
+                        Protocol://blytz.gg/
                       </div>
                     </div>
                   </div>
