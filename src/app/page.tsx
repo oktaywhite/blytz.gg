@@ -5,28 +5,13 @@ import GameSupport from '@/components/GameSupport';
 import HowItWorks from '@/components/HowItWorks';
 import Pricing from '@/components/Pricing';
 import CTA from '@/components/CTA';
+import Navbar from '@/components/Navbar';
 import { Globe, MessageSquare as Discord, Code } from 'lucide-react';
 
 export default function Home() {
   return (
     <main className="min-h-screen selection:bg-lime selection:text-black">
-      {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 px-6 py-6 flex justify-center">
-        <div className="glass px-8 py-3 rounded-full flex items-center justify-between gap-12 border border-white/5 backdrop-blur-xl max-w-6xl w-full">
-          <div className="flex items-center gap-2 group cursor-pointer">
-            <img src="/logo.png" alt="Blytz Logo" className="h-8 w-auto group-hover:scale-105 transition-transform" />
-          </div>
-          <div className="hidden md:flex items-center gap-10 text-[12px] font-bold tracking-[0.2em] text-gray-500">
-            <a href="#" className="hover:text-lime transition-colors">FEATURES</a>
-            <a href="#" className="hover:text-lime transition-colors">GAME SUPPORT</a>
-            <a href="#pricing" className="hover:text-lime transition-colors">PRICING</a>
-            <a href="#" className="hover:text-lime transition-colors">DOCS</a>
-          </div>
-          <button className="bg-white text-black px-6 py-2 rounded-full text-sm font-black hover:bg-lime transition-all shadow-[0_0_20px_rgba(255,255,255,0.1)]">
-            LOGIN
-          </button>
-        </div>
-      </nav>
+      <Navbar />
 
       <Hero />
 

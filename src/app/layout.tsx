@@ -20,8 +20,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
-      <body className={`${outfit.variable} font-sans antialiased bg-background text-foreground`}>
+    <html lang="en" className="dark" suppressHydrationWarning data-scroll-behavior="smooth">
+      <body className={`${outfit.variable} font-sans antialiased bg-background text-foreground`} suppressHydrationWarning>
         <MouseTrail />
         {children}
       </body>
