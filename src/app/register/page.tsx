@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { Hexagon, ArrowRight, Github, Mail, Lock, User } from 'lucide-react'
+import { Hexagon, ArrowRight, Mail, Lock, User } from 'lucide-react'
 import { signInWithGoogle, signInWithDiscord } from '../auth/actions'
 
 export default function RegisterPage() {
