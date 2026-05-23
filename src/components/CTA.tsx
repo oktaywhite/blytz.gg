@@ -138,7 +138,7 @@ export default function CTA() {
                       
                       {/* Floating Hostname */}
                       <div className="absolute -top-4 right-0 text-[10px] font-black text-gray-600 tracking-widest uppercase">
-                        Protocol://blytz.gg/
+                        Protocol://blytz.lol/
                       </div>
                     </div>
                   </div>

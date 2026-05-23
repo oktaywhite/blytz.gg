@@ -3,13 +3,15 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { Hexagon, ArrowRight, Mail, Lock, User } from 'lucide-react'
-import { signInWithGoogle, signInWithDiscord } from '../auth/actions'
+import { ArrowRight, Mail, Lock, User, AlertCircle } from 'lucide-react'
+import { signInWithGoogle, signInWithDiscord, registerWithEmail } from '../auth/actions'
 
 export default function RegisterPage() {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
 
   return (
     <div className="min-h-screen bg-[#050505] flex flex-col justify-center relative overflow-hidden text-white font-sans selection:bg-fuchsia-500/30">
@@ -27,8 +29,8 @@ export default function RegisterPage() {
           className="text-center mb-8"
         >
           <Link href="/" className="inline-flex items-center gap-2 mb-6 group">
-            <Hexagon className="w-8 h-8 text-fuchsia-500 fill-fuchsia-500/20 group-hover:fill-fuchsia-500/40 transition-all duration-300" />
-            <span className="text-2xl font-bold tracking-tighter">NEORANK</span>
+            <img src="/logo.png" alt="Blytz Logo" className="h-8 w-auto group-hover:scale-105 transition-transform" />
+            <span className="text-2xl font-bold tracking-tighter">BLYTZ</span>
           </Link>
           <h1 className="text-3xl font-bold mb-2 tracking-tight">Protokole Katıl</h1>
           <p className="text-zinc-400 text-sm">Saniyeler içinde profilini oluştur ve istatistiklerini takip et.</p>
@@ -83,7 +85,24 @@ export default function RegisterPage() {
           </div>
 
           {/* Email Auth */}
-          <form className="space-y-4">
+          <form 
+            action={async (formData) => {
+              setError('')
+              setSuccessMessage('')
+              const res = await registerWithEmail(formData)
+              if (res?.error) {
+                setError(res.error)
+              }
+            }} 
+            className="space-y-4"
+          >
+            {error && (
+              <div className="flex items-center gap-2 text-red-400 text-sm bg-red-400/10 p-3 rounded-lg border border-red-400/20">
+                <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                <p>{error}</p>
+              </div>
+            )}
+            {/* E-posta onayı kapalı olduğu için doğrudan yönlendirilecek, bu yüzden successMessage gösterimine şu an gerek yok ama ilerde onay gelirse diye yapıyı tutabiliriz veya silebiliriz. Sildik. */}
             <div>
               <label className="block text-sm font-medium text-zinc-400 mb-1.5 ml-1">Kullanıcı Adı</label>
               <div className="relative">
@@ -92,6 +111,7 @@ export default function RegisterPage() {
                 </div>
                 <input
                   type="text"
+                  name="username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   className="block w-full pl-10 pr-3 py-3 bg-zinc-900/50 border border-zinc-800 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-fuchsia-500/50 focus:border-fuchsia-500/50 transition-all"
@@ -108,6 +128,7 @@ export default function RegisterPage() {
                 </div>
                 <input
                   type="email"
+                  name="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="block w-full pl-10 pr-3 py-3 bg-zinc-900/50 border border-zinc-800 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-fuchsia-500/50 focus:border-fuchsia-500/50 transition-all"
@@ -124,6 +145,7 @@ export default function RegisterPage() {
                 </div>
                 <input
                   type="password"
+                  name="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="block w-full pl-10 pr-3 py-3 bg-zinc-900/50 border border-zinc-800 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-fuchsia-500/50 focus:border-fuchsia-500/50 transition-all"
@@ -133,7 +155,7 @@ export default function RegisterPage() {
             </div>
 
             <button
-              type="button" // Change to submit when implementing Email auth
+              type="submit"
               className="w-full relative flex items-center justify-center gap-2 px-4 py-3 bg-fuchsia-600 hover:bg-fuchsia-500 text-white font-semibold rounded-xl transition-all duration-300 mt-6 group overflow-hidden"
             >
               <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />

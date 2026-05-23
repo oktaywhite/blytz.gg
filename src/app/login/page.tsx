@@ -1,14 +1,18 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, Suspense } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { Hexagon, ArrowRight, Mail, Lock } from 'lucide-react'
-import { signInWithGoogle, signInWithDiscord } from '../auth/actions'
+import { useSearchParams } from 'next/navigation'
+import { ArrowRight, Mail, Lock, AlertCircle, CheckCircle2 } from 'lucide-react'
+import { signInWithGoogle, signInWithDiscord, loginWithEmail } from '../auth/actions'
 
-export default function LoginPage() {
+function LoginContent() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const searchParams = useSearchParams()
+  const registered = searchParams.get('registered')
 
   return (
     <div className="min-h-screen bg-[#050505] flex flex-col justify-center relative overflow-hidden text-white font-sans selection:bg-lime-500/30">
@@ -26,8 +30,8 @@ export default function LoginPage() {
           className="text-center mb-8"
         >
           <Link href="/" className="inline-flex items-center gap-2 mb-6 group">
-            <Hexagon className="w-8 h-8 text-lime-400 fill-lime-400/20 group-hover:fill-lime-400/40 transition-all duration-300" />
-            <span className="text-2xl font-bold tracking-tighter">NEORANK</span>
+            <img src="/logo.png" alt="Blytz Logo" className="h-8 w-auto group-hover:scale-105 transition-transform" />
+            <span className="text-2xl font-bold tracking-tighter">BLYTZ</span>
           </Link>
           <h1 className="text-3xl font-bold mb-2 tracking-tight">Sisteme Giriş Yap</h1>
           <p className="text-zinc-400 text-sm">Profilleri görüntüle, istatistiklerini takip et.</p>
@@ -82,7 +86,27 @@ export default function LoginPage() {
           </div>
 
           {/* Email Auth */}
-          <form className="space-y-4">
+          <form 
+            action={async (formData) => {
+              const res = await loginWithEmail(formData)
+              if (res?.error) {
+                setError(res.error)
+              }
+            }} 
+            className="space-y-4"
+          >
+            {error && (
+              <div className="flex items-center gap-2 text-red-400 text-sm bg-red-400/10 p-3 rounded-lg border border-red-400/20">
+                <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                <p>{error}</p>
+              </div>
+            )}
+            {registered && (
+              <div className="flex items-center gap-2 text-lime-400 text-sm bg-lime-400/10 p-3 rounded-lg border border-lime-400/20">
+                <CheckCircle2 className="w-4 h-4 flex-shrink-0" />
+                <p>Kayıt başarılı! Lütfen giriş yapmadan önce e-posta adresinize gönderilen onay bağlantısına tıklayın.</p>
+              </div>
+            )}
             <div>
               <label className="block text-sm font-medium text-zinc-400 mb-1.5 ml-1">E-posta Adresi</label>
               <div className="relative">
@@ -91,6 +115,7 @@ export default function LoginPage() {
                 </div>
                 <input
                   type="email"
+                  name="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="block w-full pl-10 pr-3 py-3 bg-zinc-900/50 border border-zinc-800 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-lime-500/50 focus:border-lime-500/50 transition-all"
@@ -112,6 +137,7 @@ export default function LoginPage() {
                 </div>
                 <input
                   type="password"
+                  name="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="block w-full pl-10 pr-3 py-3 bg-zinc-900/50 border border-zinc-800 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-lime-500/50 focus:border-lime-500/50 transition-all"
@@ -121,7 +147,7 @@ export default function LoginPage() {
             </div>
 
             <button
-              type="button" // Change to submit when implementing Email auth
+              type="submit"
               className="w-full relative flex items-center justify-center gap-2 px-4 py-3 bg-lime-500 hover:bg-lime-400 text-black font-semibold rounded-xl transition-all duration-300 mt-6 group overflow-hidden"
             >
               <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
@@ -144,5 +170,13 @@ export default function LoginPage() {
         </motion.div>
       </div>
     </div>
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#050505] flex items-center justify-center text-lime-500">Yükleniyor...</div>}>
+      <LoginContent />
+    </Suspense>
   )
 }

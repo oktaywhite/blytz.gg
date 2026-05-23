@@ -17,7 +17,7 @@ The project follows a strict **"S-Tier Minimalist / Protocol"** aesthetic:
 ## 4. Functional Requirements
 
 ### 4.1 Hero Section
-- **Dynamic URL Claim:** A prominent input field for users to check and claim their `blytz.gg/username`.
+- **Dynamic URL Claim:** A prominent input field for users to check and claim their `blytz.lol/username`.
 - **3D Tech Artifact:** A floating, interactive 3D core (Three.js) that reacts to hover/scroll.
 - **2D Interactive Grid:** A canvas-based background grid that tracks mouse movement (disabled on mobile for performance).
 
