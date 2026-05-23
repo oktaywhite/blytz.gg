@@ -4,14 +4,17 @@ import Navbar from '@/components/Navbar'
 import { Gamepad2, Eye, Calendar, Trophy, Link as LinkIcon, Share2 } from 'lucide-react'
 import MouseTrail from '@/components/MouseTrail'
 
-export default async function ProfilePage({ params }: { params: { username: string } }) {
+export default async function ProfilePage({ params }: { params: Promise<{ username: string }> }) {
+  const resolvedParams = await params
+  const username = resolvedParams.username
+  
   const supabase = await createClient()
 
   // Fetch the profile
   const { data: profile } = await supabase
     .from('profiles')
     .select('*')
-    .eq('username', params.username.toLowerCase())
+    .eq('username', username.toLowerCase())
     .single()
 
   // If no profile found, trigger 404
