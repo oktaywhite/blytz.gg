@@ -1,18 +1,10 @@
 'use client'
 
-import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowRight, Mail, Lock, User, AlertCircle } from 'lucide-react'
-import { signInWithGoogle, signInWithDiscord, registerWithEmail } from '../auth/actions'
+import { signInWithGoogle, signInWithDiscord } from '../auth/actions'
 
 export default function RegisterPage() {
-  const [username, setUsername] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const [successMessage, setSuccessMessage] = useState('')
-
   return (
     <div className="min-h-screen bg-[#050505] flex flex-col justify-center relative overflow-hidden text-white font-sans selection:bg-fuchsia-500/30">
       {/* Background Effects */}
@@ -28,9 +20,8 @@ export default function RegisterPage() {
           transition={{ duration: 0.5 }}
           className="text-center mb-8"
         >
-          <Link href="/" className="inline-flex items-center gap-2 mb-6 group">
-            <img src="/logo.png" alt="Blytz Logo" className="h-8 w-auto group-hover:scale-105 transition-transform" />
-            <span className="text-2xl font-bold tracking-tighter">BLYTZ</span>
+          <Link href="/" className="inline-flex items-center mb-6 group">
+            <img src="/logo.png" alt="Blytz Logo" className="h-10 w-auto group-hover:scale-105 transition-transform" />
           </Link>
           <h1 className="text-3xl font-bold mb-2 tracking-tight">Protokole Katıl</h1>
           <p className="text-zinc-400 text-sm">Saniyeler içinde profilini oluştur ve istatistiklerini takip et.</p>
@@ -46,8 +37,10 @@ export default function RegisterPage() {
           <div className="absolute top-0 left-8 right-8 h-[1px] bg-gradient-to-r from-transparent via-fuchsia-500/50 to-transparent" />
           <div className="absolute bottom-0 left-8 right-8 h-[1px] bg-gradient-to-r from-transparent via-lime-500/50 to-transparent" />
 
+          <p className="text-center text-zinc-400 text-sm mb-6">Kayıt olmak için bir platform seç</p>
+
           {/* Social Auth */}
-          <div className="space-y-3 mb-8">
+          <div className="space-y-3">
             <form action={signInWithDiscord}>
               <button
                 type="submit"
@@ -77,92 +70,6 @@ export default function RegisterPage() {
               </button>
             </form>
           </div>
-
-          <div className="relative flex items-center py-4 mb-8">
-            <div className="flex-grow border-t border-zinc-800"></div>
-            <span className="flex-shrink-0 mx-4 text-zinc-500 text-xs uppercase tracking-wider">Veya e-posta ile</span>
-            <div className="flex-grow border-t border-zinc-800"></div>
-          </div>
-
-          {/* Email Auth */}
-          <form 
-            action={async (formData) => {
-              setError('')
-              setSuccessMessage('')
-              const res = await registerWithEmail(formData)
-              if (res?.error) {
-                setError(res.error)
-              }
-            }} 
-            className="space-y-4"
-          >
-            {error && (
-              <div className="flex items-center gap-2 text-red-400 text-sm bg-red-400/10 p-3 rounded-lg border border-red-400/20">
-                <AlertCircle className="w-4 h-4 flex-shrink-0" />
-                <p>{error}</p>
-              </div>
-            )}
-            {/* E-posta onayı kapalı olduğu için doğrudan yönlendirilecek, bu yüzden successMessage gösterimine şu an gerek yok ama ilerde onay gelirse diye yapıyı tutabiliriz veya silebiliriz. Sildik. */}
-            <div>
-              <label className="block text-sm font-medium text-zinc-400 mb-1.5 ml-1">Kullanıcı Adı</label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <User className="h-5 w-5 text-zinc-500" />
-                </div>
-                <input
-                  type="text"
-                  name="username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  className="block w-full pl-10 pr-3 py-3 bg-zinc-900/50 border border-zinc-800 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-fuchsia-500/50 focus:border-fuchsia-500/50 transition-all"
-                  placeholder="oyuncu_adi"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-zinc-400 mb-1.5 ml-1">E-posta Adresi</label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className="h-5 w-5 text-zinc-500" />
-                </div>
-                <input
-                  type="email"
-                  name="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="block w-full pl-10 pr-3 py-3 bg-zinc-900/50 border border-zinc-800 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-fuchsia-500/50 focus:border-fuchsia-500/50 transition-all"
-                  placeholder="isim@ornek.com"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-zinc-400 mb-1.5 ml-1">Şifre</label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-zinc-500" />
-                </div>
-                <input
-                  type="password"
-                  name="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full pl-10 pr-3 py-3 bg-zinc-900/50 border border-zinc-800 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-fuchsia-500/50 focus:border-fuchsia-500/50 transition-all"
-                  placeholder="••••••••"
-                />
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              className="w-full relative flex items-center justify-center gap-2 px-4 py-3 bg-fuchsia-600 hover:bg-fuchsia-500 text-white font-semibold rounded-xl transition-all duration-300 mt-6 group overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-              <span>Kaydı Tamamla</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </button>
-          </form>
         </motion.div>
 
         <motion.div

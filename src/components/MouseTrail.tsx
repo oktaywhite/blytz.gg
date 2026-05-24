@@ -46,7 +46,7 @@ export default function MouseTrail() {
   if (!mounted || isMobile) return null;
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-[9999] overflow-hidden">
+    <div className="fixed inset-0 pointer-events-none z-[99999] overflow-hidden">
       {/* Dynamic Glow Aura - Lime */}
       <motion.div
         className="absolute top-0 left-0 w-32 h-32 bg-lime/10 rounded-full blur-[50px]"

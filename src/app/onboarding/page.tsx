@@ -130,9 +130,8 @@ export default function OnboardingPage() {
 
       <div className="relative z-10 flex-grow flex flex-col pt-12 px-6">
         <div className="w-full max-w-2xl mx-auto flex items-center justify-between mb-12">
-          <div className="flex items-center gap-2">
-            <img src="/logo.png" alt="Blytz Logo" className="h-8 w-auto" />
-            <span className="text-xl font-bold tracking-tighter">BLYTZ</span>
+          <div className="flex items-center">
+            <img src="/logo.png" alt="Blytz Logo" className="h-10 w-auto" />
           </div>
           
           <div className="flex items-center gap-2">

@@ -1,8 +1,10 @@
 import { createClient } from '@/utils/supabase/server'
 import { notFound } from 'next/navigation'
 import Navbar from '@/components/Navbar'
-import { Gamepad2, Eye, Calendar, Trophy, Link as LinkIcon, Share2 } from 'lucide-react'
+import { Gamepad2, Eye, Calendar, Link as LinkIcon } from 'lucide-react'
 import MouseTrail from '@/components/MouseTrail'
+import ShareButton from '@/components/ShareButton'
+import { headers } from 'next/headers'
 
 export default async function ProfilePage({ params }: { params: Promise<{ username: string }> }) {
   const resolvedParams = await params
@@ -22,9 +24,16 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
     notFound()
   }
 
-  // Update view count (fire and forget)
-  // In a real app, you might want to prevent self-views or use an edge function
-  // await supabase.rpc('increment_view_count', { profile_id: profile.id })
+  // Increment view count — skip if viewing own profile, enforce 24h IP cooldown
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user || user.id !== profile.id) {
+    const headersList = await headers()
+    const ip =
+      headersList.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+      headersList.get('x-real-ip') ||
+      'unknown'
+    await supabase.rpc('increment_view_count', { profile_id: profile.id, visitor_ip: ip })
+  }
 
   return (
     <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-lime-500/30">
@@ -56,8 +65,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
                 className="w-full h-full object-cover"
               />
             </div>
-            {/* Status indicator */}
-            <div className="absolute bottom-2 right-2 w-5 h-5 bg-lime-500 rounded-full border-4 border-[#050505]" title="Online" />
+
           </div>
 
           {/* User Info */}
@@ -86,9 +94,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
             <button className="flex items-center gap-2 bg-white text-black px-6 py-2.5 rounded-full text-sm font-bold hover:bg-lime-400 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.1)]">
               Bağlantı Kur
             </button>
-            <button className="p-2.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 transition-colors text-white" title="Profili Paylaş">
-              <Share2 className="w-5 h-5" />
-            </button>
+            <ShareButton username={profile.username} />
           </div>
         </div>
 
