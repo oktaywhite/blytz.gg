@@ -43,6 +43,58 @@ body {
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
 
+.glass-strong {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 40px 0 rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+.glass-card {
+  background: rgba(15, 15, 15, 0.7);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.05);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+.bento-lime {
+  background: linear-gradient(135deg, rgba(204,255,0,0.07) 0%, rgba(204,255,0,0.02) 100%);
+  border-color: rgba(204, 255, 0, 0.12) !important;
+}
+
+.bento-lime:hover {
+  border-color: rgba(204, 255, 0, 0.25) !important;
+  box-shadow: 0 0 40px rgba(204,255,0,0.08), 0 8px 40px rgba(0,0,0,0.5);
+}
+
+.bento-magenta {
+  background: linear-gradient(135deg, rgba(255,0,255,0.07) 0%, rgba(255,0,255,0.02) 100%);
+  border-color: rgba(255, 0, 255, 0.12) !important;
+}
+
+.bento-magenta:hover {
+  border-color: rgba(255, 0, 255, 0.25) !important;
+  box-shadow: 0 0 40px rgba(255,0,255,0.08), 0 8px 40px rgba(0,0,0,0.5);
+}
+
+.bento-cyan {
+  background: linear-gradient(135deg, rgba(10,200,185,0.07) 0%, rgba(10,200,185,0.02) 100%);
+  border-color: rgba(10, 200, 185, 0.12) !important;
+}
+
+.bento-cyan:hover {
+  border-color: rgba(10, 200, 185, 0.25) !important;
+  box-shadow: 0 0 40px rgba(10,200,185,0.08), 0 8px 40px rgba(0,0,0,0.5);
+}
+
 .text-gradient-lime {
   background: linear-gradient(to right, #CCFF00, #9EFF00);
   -webkit-background-clip: text;
@@ -63,4 +115,34 @@ body {
 
 .glow-magenta {
   box-shadow: 0 0 20px rgba(255, 0, 255, 0.2);
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.04) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 3s infinite linear;
+}
+
+@keyframes float-up {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+.animate-float {
+  animation: float-up 4s ease-in-out infinite;
+}
+
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(204,255,0,0.3); }
+  70% { box-shadow: 0 0 0 12px rgba(204,255,0,0); }
+  100% { box-shadow: 0 0 0 0 rgba(204,255,0,0); }
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
 }
