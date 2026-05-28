@@ -47,12 +47,32 @@ export async function signInWithGoogle() {
 }
 
 
+const ALLOWED_AVATAR_HOSTS = [
+  'supabase.co',
+  'lh3.googleusercontent.com',
+  'cdn.discordapp.com',
+  'avatars.githubusercontent.com',
+]
+
 export async function updateUsername(formData: FormData) {
   const username = formData.get('username') as string
   const avatarUrl = formData.get('avatarUrl') as string
 
   if (!username) {
     return { error: 'Kullanıcı adı boş bırakılamaz.' }
+  }
+
+  // avatarUrl güvenlik kontrolü
+  if (avatarUrl && avatarUrl !== '/logo.png') {
+    try {
+      const url = new URL(avatarUrl)
+      const isAllowed = ALLOWED_AVATAR_HOSTS.some(host => url.hostname.endsWith(host))
+      if (!isAllowed) {
+        return { error: 'Geçersiz avatar kaynağı.' }
+      }
+    } catch {
+      return { error: 'Geçersiz URL formatı.' }
+    }
   }
 
   const supabase = await createClient()

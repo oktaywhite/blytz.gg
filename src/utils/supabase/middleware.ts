@@ -11,7 +11,7 @@ export async function updateSession(request: NextRequest) {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookieOptions: {
-        maxAge: 31536000 * 10,
+        maxAge: 60 * 60 * 24 * 7, // 7 gün
       },
       cookies: {
         getAll() {
@@ -23,7 +23,7 @@ export async function updateSession(request: NextRequest) {
             request,
           })
           cookiesToSet.forEach(({ name, value, options }) =>
-            supabaseResponse.cookies.set(name, value, { ...options, maxAge: 31536000 * 10 })
+            supabaseResponse.cookies.set(name, value, { ...options, maxAge: 60 * 60 * 24 * 7 }) // 7 gün
           )
         },
       },
